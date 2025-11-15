@@ -1,11 +1,15 @@
-import './App.css'
+import KanbanBoard from "./components/KanbanBoard"
 
 function App() {
 
   return (
-    <h1>
-      Hello World!
-    </h1>
+    <>
+      <h1 className="">
+        Dev Traxck!
+      </h1>
+      <KanbanBoard />
+    </>
+
   )
 }
 
