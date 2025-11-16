@@ -5,3 +5,9 @@ body,
 #root {
   @apply bg-black text-white box-border;
 }
+
+
+@theme {
+  --color-mainBackgroundColor: #0D1117;
+  --color-columnBackgroundColor: #161C22;
+}
