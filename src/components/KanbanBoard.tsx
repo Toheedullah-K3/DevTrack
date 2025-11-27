@@ -92,6 +92,11 @@ function KanbanBoard() {
         setTasks([...tasks, newTask])
     }
 
+    function deleteTask(id: Id){
+        const newTasks = tasks.filter(task => task.id !== id);
+        setTasks(newTasks)
+    }
+
 
     return (
         <div className="m-auto flex min-h-screen w-full items-center overflow-x-auto overflow-y-hidden px-10">
@@ -107,6 +112,8 @@ function KanbanBoard() {
                                     deleteColumn={deleteColumn} 
                                     updateColumn={updateColumn}
                                     createTask={createTask}
+                                    deleteTask={deleteTask}
+                                    tasks={tasks.filter(task => task.columnId === col.id)}
                                     />
                             ))}
                         </SortableContext>

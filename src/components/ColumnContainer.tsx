@@ -1,9 +1,10 @@
 import { useState } from "react"
 import TrashIcon from "../icons/TrashIcon"
-import type { Column, Id } from "../types"
+import type { Column, Id, Task } from "../types"
 import { useSortable } from "@dnd-kit/sortable"
 import { CSS } from "@dnd-kit/utilities"
 import PlusIcon from "../icons/PlusIcon"
+import TaskCard from "./TaskCard"
 
 
 interface Props {
@@ -12,8 +13,10 @@ interface Props {
     updateColumn: (id: Id, title: string) =>  void;
 
     createTask: (columnId: Id) => void;
+    deleteTask: (id: Id) => void;
+    tasks: Task[]
 }
-function ColumnContainer({ column, deleteColumn, updateColumn, createTask }: Props) {
+function ColumnContainer({ column, deleteColumn, updateColumn, createTask, tasks, deleteTask }: Props) {
 
     const [editMode, setEditMode] = useState(false);
 
@@ -79,8 +82,12 @@ function ColumnContainer({ column, deleteColumn, updateColumn, createTask }: Pro
             </div>
 
             {/* Column Task Container  */}
-            <div className="flex grow">
-                Content
+            <div className="flex grow flex-col gap-4 p-2 overflow-x-hidden overflow-y-auto">
+                {
+                    tasks.map(task => (
+                        <TaskCard key={task.id} task={task} deleteTask= {deleteTask} />
+                    ))
+                }
             </div>
 
             {/* Column Footer  */}
