@@ -3,14 +3,17 @@ import TrashIcon from "../icons/TrashIcon"
 import type { Column, Id } from "../types"
 import { useSortable } from "@dnd-kit/sortable"
 import { CSS } from "@dnd-kit/utilities"
+import PlusIcon from "../icons/PlusIcon"
 
 
 interface Props {
     column: Column,
     deleteColumn: (id: Id) => void;
     updateColumn: (id: Id, title: string) =>  void;
+
+    createTask: (columnId: Id) => void;
 }
-function ColumnContainer({ column, deleteColumn, updateColumn }: Props) {
+function ColumnContainer({ column, deleteColumn, updateColumn, createTask }: Props) {
 
     const [editMode, setEditMode] = useState(false);
 
@@ -81,9 +84,15 @@ function ColumnContainer({ column, deleteColumn, updateColumn }: Props) {
             </div>
 
             {/* Column Footer  */}
-            <div>
-                Footer
-            </div>
+            <button 
+                className="flex gap-2 items-center border-columnBackgroundColor border-2 rounded-md p-4 border-x-columnBackgroundColor hover:bg-mainBackgroundColor hover:text-rose-500 active:bg-black"
+                onClick={() => {
+                    createTask(column.id);
+                }}
+            >
+                <PlusIcon />
+                Add Task
+            </button>
         </div>
     )
 }

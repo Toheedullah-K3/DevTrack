@@ -6,7 +6,7 @@ import { arrayMove, SortableContext } from '@dnd-kit/sortable';
 
 
 // types import
-import type { Column, Id } from '../types'
+import type { Column, Id, Task } from '../types'
 import { createPortal } from 'react-dom';
 
 
@@ -15,6 +15,7 @@ function KanbanBoard() {
     const columnsId = useMemo(() => columns.map(col => col.id), [columns])
 
     const [activeColum, setActiveColumn] = useState<Column | null>()
+    const [tasks, setTasks] = useState<Task[]>([])
 
     const sensors = useSensors(useSensor(PointerSensor, {
         activationConstraint: {
@@ -56,6 +57,7 @@ function KanbanBoard() {
         })
         setColumns(newColumns)
     }
+
     function onDragEnd(event: DragEndEvent){
         const {active, over} = event;
 
@@ -79,6 +81,17 @@ function KanbanBoard() {
         })
     }
 
+    function createTask(columnId: Id){
+        const newTask: Task = {
+            id: generateId(),
+            columnId,
+            content: `Task ${tasks.length + 1}`
+
+        }
+
+        setTasks([...tasks, newTask])
+    }
+
 
     return (
         <div className="m-auto flex min-h-screen w-full items-center overflow-x-auto overflow-y-hidden px-10">
@@ -93,6 +106,7 @@ function KanbanBoard() {
                                     column={col} 
                                     deleteColumn={deleteColumn} 
                                     updateColumn={updateColumn}
+                                    createTask={createTask}
                                     />
                             ))}
                         </SortableContext>
@@ -106,6 +120,7 @@ function KanbanBoard() {
                             column={activeColum}
                             deleteColumn={deleteColumn}
                             updateColumn={updateColumn}
+                            createTask={createTask}
                         >
                         
                         </ColumnContainer>
